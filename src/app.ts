@@ -34,8 +34,17 @@ app.use(
 
 import userRoutes from "./routes/user.route.js"
 import { globalErrorHandler } from "./middlewares/error.middleware.js";
-
 app.use("/api/v1/users", userRoutes);
+
+app.all("*", (req:Request, res:Response, next:NextFunction)=>{
+    next(
+        new ApiError({
+            statusCode: 404,
+            message: `Route ${req.url} not found`
+        })
+    )
+})
+
 app.use(globalErrorHandler);
 
 

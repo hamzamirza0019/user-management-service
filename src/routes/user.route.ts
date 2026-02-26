@@ -16,8 +16,15 @@ const router = Router();
  * GET       /api/v1/users
  */
 
+import { validateCreateUser } from "../middlewares/validateUser.middleware.js";
+import { validateObjectId } from "../middlewares/validateObjectById.middleware.js";
+
+
+
 router.route("/")
-.post(asyncHandler(createUser))
+.post(
+    validateCreateUser,
+    asyncHandler(createUser))
 .get(asyncHandler(getUsers));
 
 /**
@@ -27,8 +34,8 @@ router.route("/")
  */
 
 router.route("/:id")
-.get(asyncHandler(getUserById))
-.put(asyncHandler(updateUser))
-.delete(asyncHandler(deleteUser));
+.get(validateObjectId,asyncHandler(getUserById))
+.put(validateObjectId, asyncHandler(updateUser))
+.delete(validateObjectId, asyncHandler(deleteUser));
 
 export default router;

@@ -5,12 +5,7 @@ import { UserRole, UserStatus } from "../models/user.types.js";
 
 export const createUser = async ( req:Request, res: Response)=>{
     const {name, email} = req.body;
-    if (!name || !email){
-        throw new ApiError ({
-            statusCode: 400,
-            message: "Name and Email are required!"
-        })
-    }
+   
     const existUser = await User.findOne({email});
 
     if(existUser){
@@ -41,13 +36,6 @@ export const getUserById = async (req: Request, res:Response)=>{
     const { id } = req.params;
 
     const user = await User.findById(id);
-
-    if(!user){
-        throw new ApiError({
-            statusCode: 404,
-            message: "User Not Found!"
-        })
-    }
 
     res.status(200).json({
         success: true,

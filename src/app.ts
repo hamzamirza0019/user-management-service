@@ -36,7 +36,7 @@ import userRoutes from "./routes/user.route.js"
 import { globalErrorHandler } from "./middlewares/error.middleware.js";
 app.use("/api/v1/users", userRoutes);
 
-app.all("*", (req:Request, res:Response, next:NextFunction)=>{
+app.use((req:Request, res:Response, next:NextFunction)=>{
     next(
         new ApiError({
             statusCode: 404,
